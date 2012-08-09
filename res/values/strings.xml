@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+title_edit<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BrainDump</string>
     <string name="finish_text">Done</string>
+    <string name="title_edit">Title Edit</string>
+    <string name="title_create">Title Create</string>
 </resources>
