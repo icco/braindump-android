@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.notepad;
+package com.example.android.braindump;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -38,7 +38,7 @@ public class TitleEditor extends Activity {
     /**
      * This is a special intent action that means "edit the title of a note".
      */
-    public static final String EDIT_TITLE_ACTION = "com.android.notepad.action.EDIT_TITLE";
+    public static final String EDIT_TITLE_ACTION = "com.android.braindump.action.EDIT_TITLE";
 
     // Creates a projection that returns the note ID and the note contents.
     private static final String[] PROJECTION = new String[] {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.notepad;
+package com.example.android.braindump;
 
 import android.net.Uri;
 import android.provider.BaseColumns;

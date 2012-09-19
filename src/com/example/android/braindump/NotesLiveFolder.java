@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.example.android.notepad;
+package com.example.android.braindump;
 
-import com.example.android.notepad.Braindump;
+import com.example.android.braindump.Braindump;
 
 import android.app.Activity;
 import android.content.Intent;

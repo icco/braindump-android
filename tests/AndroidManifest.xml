@@ -17,15 +17,15 @@
 <!--
     To run this test package, install it and the NotesList application to a device or emulator and
     then run
-    adb shell am instrument -w com.example.android.notepad.tests/android.test.InstrumentationTestRunner
+    adb shell am instrument -w com.example.android.braindump.tests/android.test.InstrumentationTestRunner
 -->
 <!--
     The Android package name differs from the package ID of the code. The code package ID
-    'com.example.android.notepad' allows the test code to use declarations from the application
+    'com.example.android.braindump' allows the test code to use declarations from the application
     under test, while the Android package name identifies this as a separate test package.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.notepad.tests"
+    package="com.example.android.braindump.tests"
     android:versionCode="1"
     android:versionName="1.0">
     <!--
@@ -38,12 +38,12 @@
     </application>
     <!--
         The instrumentation element tells Android to use instrumentation to run this package.
-        The target Android package 'com.example.android.notepad' is loaded along with the
-        test package 'com.example.android.notepad.tests'. Android then starts the class
+        The target Android package 'com.example.android.braindump' is loaded along with the
+        test package 'com.example.android.braindump.tests'. Android then starts the class
         'android.test.InstrumentationTestRunner', which loads the test case classes in the package.
     -->
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="com.example.android.notepad"
-                     android:label="Tests for com.example.android.notepad"/>
+                     android:targetPackage="com.example.android.braindump"
+                     android:label="Tests for com.example.android.braindump"/>
     <uses-sdk android:minSdkVersion="10"></uses-sdk>
 </manifest>

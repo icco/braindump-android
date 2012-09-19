@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.example.android.notepad;
+package com.example.android.braindump;
 
 import android.test.ActivityInstrumentationTestCase2;
-import com.example.android.notepad.NotesList;
+import com.example.android.braindump.NotesList;
 
 /**
  * Make sure that the main launcher activity opens up properly, which will be
