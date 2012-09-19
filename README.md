@@ -1,4 +1,3 @@
-braindump-android
-=================
+# braindump android
 
-braindump.im
+Android app for <http:/braindump.im>. Requires Jelly Bean.
