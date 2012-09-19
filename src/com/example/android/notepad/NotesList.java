@@ -16,7 +16,7 @@
 
 package com.example.android.notepad;
 
-import com.example.android.notepad.NotePad;
+import com.example.android.notepad.Braindump;
 
 import android.app.ListActivity;
 import android.content.ClipboardManager;
@@ -42,7 +42,7 @@ import android.widget.SimpleCursorAdapter;
 /**
  * Displays a list of notes. Will display notes from the {@link Uri}
  * provided in the incoming Intent if there is one, otherwise it defaults to displaying the
- * contents of the {@link NotePadProvider}.
+ * contents of the {@link BraindumpProvider}.
  *
  * NOTE: Notice that the provider operations in this Activity are taking place on the UI thread.
  * This is not a good practice. It is only done here to make the code more readable. A real
@@ -58,8 +58,8 @@ public class NotesList extends ListActivity {
      * The columns needed by the cursor adapter
      */
     private static final String[] PROJECTION = new String[] {
-            NotePad.Notes._ID, // 0
-            NotePad.Notes.COLUMN_NAME_TITLE, // 1
+            Braindump.Notes._ID, // 0
+            Braindump.Notes.COLUMN_NAME_TITLE, // 1
     };
 
     /** The index of the title column */
@@ -85,7 +85,7 @@ public class NotesList extends ListActivity {
         // If there is no data associated with the Intent, sets the data to the default URI, which
         // accesses a list of notes.
         if (intent.getData() == null) {
-            intent.setData(NotePad.Notes.CONTENT_URI);
+            intent.setData(Braindump.Notes.CONTENT_URI);
         }
 
         /*
@@ -105,7 +105,7 @@ public class NotesList extends ListActivity {
             PROJECTION,                       // Return the note ID and title for each note.
             null,                             // No where clause, return all records.
             null,                             // No where clause, therefore no where column values.
-            NotePad.Notes.DEFAULT_SORT_ORDER  // Use the default sort order.
+            Braindump.Notes.DEFAULT_SORT_ORDER  // Use the default sort order.
         );
 
         /*
@@ -117,7 +117,7 @@ public class NotesList extends ListActivity {
          */
 
         // The names of the cursor columns to display in the view, initialized to the title column
-        String[] dataColumns = { NotePad.Notes.COLUMN_NAME_TITLE } ;
+        String[] dataColumns = { Braindump.Notes.COLUMN_NAME_TITLE } ;
 
         // The view IDs that will display the cursor columns, initialized to the TextView in
         // noteslist_item.xml
@@ -144,7 +144,7 @@ public class NotesList extends ListActivity {
      * Sets up a menu that provides the Insert option plus a list of alternative actions for
      * this Activity. Other applications that want to handle notes can "register" themselves in
      * Android by providing an intent filter that includes the category ALTERNATIVE and the
-     * mimeTYpe NotePad.Notes.CONTENT_TYPE. If they do this, the code in onCreateOptionsMenu()
+     * mimeTYpe Braindump.Notes.CONTENT_TYPE. If they do this, the code in onCreateOptionsMenu()
      * will add the Activity that contains the intent filter to its list of options. In effect,
      * the menu will offer the user other applications that can handle notes.
      * @param menu A Menu object, to which menu items should be added.
@@ -252,7 +252,7 @@ public class NotesList extends ListActivity {
      * This method is called when the user selects an option from the menu, but no item
      * in the list is selected. If the option was INSERT, then a new Intent is sent out with action
      * ACTION_INSERT. The data from the incoming Intent is put into the new Intent. In effect,
-     * this triggers the NoteEditor activity in the NotePad application.
+     * this triggers the NoteEditor activity in the Braindump application.
      *
      * If the item was not INSERT, then most likely it was an alternative option from another
      * application. The parent method is called to process the item.
@@ -267,7 +267,7 @@ public class NotesList extends ListActivity {
           /*
            * Launches a new Activity using an Intent. The intent filter for the Activity
            * has to have action ACTION_INSERT. No category is set, so DEFAULT is assumed.
-           * In effect, this starts the NoteEditor Activity in NotePad.
+           * In effect, this starts the NoteEditor Activity in Braindump.
            */
            startActivity(new Intent(Intent.ACTION_INSERT, getIntent().getData()));
            return true;
@@ -275,7 +275,7 @@ public class NotesList extends ListActivity {
           /*
            * Launches a new Activity using an Intent. The intent filter for the Activity
            * has to have action ACTION_PASTE. No category is set, so DEFAULT is assumed.
-           * In effect, this starts the NoteEditor Activity in NotePad.
+           * In effect, this starts the NoteEditor Activity in Braindump.
            */
           startActivity(new Intent(Intent.ACTION_PASTE, getIntent().getData()));
           return true;

@@ -16,7 +16,7 @@
 
 package com.example.android.notepad;
 
-import com.example.android.notepad.NotePad;
+import com.example.android.notepad.Braindump;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -63,7 +63,7 @@ public class NotesLiveFolder extends Activity {
              * data values. From this data, HOME sets up a live folder.
              */
             // Sets the URI pattern for the content provider backing the folder.
-            liveFolderIntent.setData(NotePad.Notes.LIVE_FOLDER_URI);
+            liveFolderIntent.setData(Braindump.Notes.LIVE_FOLDER_URI);
 
             // Adds the display name of the live folder as an Extra string.
             String foldername = getString(R.string.live_folder_name);
@@ -91,7 +91,7 @@ public class NotesLiveFolder extends Activity {
              * As a result, Note Editor is triggered and gets a single note to retrieve by ID.
              */
             Intent returnIntent
-                    = new Intent(Intent.ACTION_EDIT, NotePad.Notes.CONTENT_ID_URI_PATTERN);
+                    = new Intent(Intent.ACTION_EDIT, Braindump.Notes.CONTENT_ID_URI_PATTERN);
             liveFolderIntent.putExtra(LiveFolders.EXTRA_LIVE_FOLDER_BASE_INTENT, returnIntent);
 
             /* Creates an ActivityResult object to propagate back to HOME. Set its result indicator

@@ -16,7 +16,7 @@
 
 package com.example.android.notepad;
 
-import com.example.android.notepad.NotePad;
+import com.example.android.notepad.Braindump;
 
 import android.content.ClipDescription;
 import android.content.ContentProvider;
@@ -51,9 +51,9 @@ import java.util.HashMap;
  * Provides access to a database of notes. Each note has a title, the note
  * itself, a creation date and a modified data.
  */
-public class NotePadProvider extends ContentProvider implements PipeDataWriter<Cursor> {
+public class BraindumpProvider extends ContentProvider implements PipeDataWriter<Cursor> {
     // Used for debugging and logging
-    private static final String TAG = "NotePadProvider";
+    private static final String TAG = "BraindumpProvider";
 
     /**
      * The database that the provider uses as its underlying data store
@@ -79,9 +79,9 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
      * Standard projection for the interesting columns of a normal note.
      */
     private static final String[] READ_NOTE_PROJECTION = new String[] {
-            NotePad.Notes._ID,               // Projection position 0, the note's id
-            NotePad.Notes.COLUMN_NAME_NOTE,  // Projection position 1, the note's content
-            NotePad.Notes.COLUMN_NAME_TITLE, // Projection position 2, the note's title
+            Braindump.Notes._ID,               // Projection position 0, the note's id
+            Braindump.Notes.COLUMN_NAME_NOTE,  // Projection position 1, the note's content
+            Braindump.Notes.COLUMN_NAME_TITLE, // Projection position 2, the note's title
     };
     private static final int READ_NOTE_NOTE_INDEX = 1;
     private static final int READ_NOTE_TITLE_INDEX = 2;
@@ -120,15 +120,15 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
         sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
         // Add a pattern that routes URIs terminated with "notes" to a NOTES operation
-        sUriMatcher.addURI(NotePad.AUTHORITY, "notes", NOTES);
+        sUriMatcher.addURI(Braindump.AUTHORITY, "notes", NOTES);
 
         // Add a pattern that routes URIs terminated with "notes" plus an integer
         // to a note ID operation
-        sUriMatcher.addURI(NotePad.AUTHORITY, "notes/#", NOTE_ID);
+        sUriMatcher.addURI(Braindump.AUTHORITY, "notes/#", NOTE_ID);
 
         // Add a pattern that routes URIs terminated with live_folders/notes to a
         // live folder operation
-        sUriMatcher.addURI(NotePad.AUTHORITY, "live_folders/notes", LIVE_FOLDER_NOTES);
+        sUriMatcher.addURI(Braindump.AUTHORITY, "live_folders/notes", LIVE_FOLDER_NOTES);
 
         /*
          * Creates and initializes a projection map that returns all columns
@@ -139,22 +139,22 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
         sNotesProjectionMap = new HashMap<String, String>();
 
         // Maps the string "_ID" to the column name "_ID"
-        sNotesProjectionMap.put(NotePad.Notes._ID, NotePad.Notes._ID);
+        sNotesProjectionMap.put(Braindump.Notes._ID, Braindump.Notes._ID);
 
         // Maps "title" to "title"
-        sNotesProjectionMap.put(NotePad.Notes.COLUMN_NAME_TITLE, NotePad.Notes.COLUMN_NAME_TITLE);
+        sNotesProjectionMap.put(Braindump.Notes.COLUMN_NAME_TITLE, Braindump.Notes.COLUMN_NAME_TITLE);
 
         // Maps "note" to "note"
-        sNotesProjectionMap.put(NotePad.Notes.COLUMN_NAME_NOTE, NotePad.Notes.COLUMN_NAME_NOTE);
+        sNotesProjectionMap.put(Braindump.Notes.COLUMN_NAME_NOTE, Braindump.Notes.COLUMN_NAME_NOTE);
 
         // Maps "created" to "created"
-        sNotesProjectionMap.put(NotePad.Notes.COLUMN_NAME_CREATE_DATE,
-                NotePad.Notes.COLUMN_NAME_CREATE_DATE);
+        sNotesProjectionMap.put(Braindump.Notes.COLUMN_NAME_CREATE_DATE,
+                Braindump.Notes.COLUMN_NAME_CREATE_DATE);
 
         // Maps "modified" to "modified"
         sNotesProjectionMap.put(
-                NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE,
-                NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE);
+                Braindump.Notes.COLUMN_NAME_MODIFICATION_DATE,
+                Braindump.Notes.COLUMN_NAME_MODIFICATION_DATE);
 
         /*
          * Creates an initializes a projection map for handling Live Folders
@@ -164,10 +164,10 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
         sLiveFolderProjectionMap = new HashMap<String, String>();
 
         // Maps "_ID" to "_ID AS _ID" for a live folder
-        sLiveFolderProjectionMap.put(LiveFolders._ID, NotePad.Notes._ID + " AS " + LiveFolders._ID);
+        sLiveFolderProjectionMap.put(LiveFolders._ID, Braindump.Notes._ID + " AS " + LiveFolders._ID);
 
         // Maps "NAME" to "title AS NAME"
-        sLiveFolderProjectionMap.put(LiveFolders.NAME, NotePad.Notes.COLUMN_NAME_TITLE + " AS " +
+        sLiveFolderProjectionMap.put(LiveFolders.NAME, Braindump.Notes.COLUMN_NAME_TITLE + " AS " +
             LiveFolders.NAME);
     }
 
@@ -187,16 +187,16 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
        /**
         *
         * Creates the underlying database with table name and column names taken from the
-        * NotePad class.
+        * Braindump class.
         */
        @Override
        public void onCreate(SQLiteDatabase db) {
-           db.execSQL("CREATE TABLE " + NotePad.Notes.TABLE_NAME + " ("
-                   + NotePad.Notes._ID + " INTEGER PRIMARY KEY,"
-                   + NotePad.Notes.COLUMN_NAME_TITLE + " TEXT,"
-                   + NotePad.Notes.COLUMN_NAME_NOTE + " TEXT,"
-                   + NotePad.Notes.COLUMN_NAME_CREATE_DATE + " INTEGER,"
-                   + NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE + " INTEGER"
+           db.execSQL("CREATE TABLE " + Braindump.Notes.TABLE_NAME + " ("
+                   + Braindump.Notes._ID + " INTEGER PRIMARY KEY,"
+                   + Braindump.Notes.COLUMN_NAME_TITLE + " TEXT,"
+                   + Braindump.Notes.COLUMN_NAME_NOTE + " TEXT,"
+                   + Braindump.Notes.COLUMN_NAME_CREATE_DATE + " INTEGER,"
+                   + Braindump.Notes.COLUMN_NAME_MODIFICATION_DATE + " INTEGER"
                    + ");");
        }
 
@@ -254,7 +254,7 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
 
        // Constructs a new query builder and sets its table name
        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-       qb.setTables(NotePad.Notes.TABLE_NAME);
+       qb.setTables(Braindump.Notes.TABLE_NAME);
 
        /**
         * Choose the projection and adjust the "where" clause based on URI pattern-matching.
@@ -272,10 +272,10 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
            case NOTE_ID:
                qb.setProjectionMap(sNotesProjectionMap);
                qb.appendWhere(
-                   NotePad.Notes._ID +    // the name of the ID column
+                   Braindump.Notes._ID +    // the name of the ID column
                    "=" +
                    // the position of the note ID itself in the incoming URI
-                   uri.getPathSegments().get(NotePad.Notes.NOTE_ID_PATH_POSITION));
+                   uri.getPathSegments().get(Braindump.Notes.NOTE_ID_PATH_POSITION));
                break;
 
            case LIVE_FOLDER_NOTES:
@@ -292,7 +292,7 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
        String orderBy;
        // If no sort order is specified, uses the default
        if (TextUtils.isEmpty(sortOrder)) {
-           orderBy = NotePad.Notes.DEFAULT_SORT_ORDER;
+           orderBy = Braindump.Notes.DEFAULT_SORT_ORDER;
        } else {
            // otherwise, uses the incoming sort order
            orderBy = sortOrder;
@@ -340,11 +340,11 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
            // If the pattern is for notes or live folders, returns the general content type.
            case NOTES:
            case LIVE_FOLDER_NOTES:
-               return NotePad.Notes.CONTENT_TYPE;
+               return Braindump.Notes.CONTENT_TYPE;
 
            // If the pattern is for note IDs, returns the note ID content type.
            case NOTE_ID:
-               return NotePad.Notes.CONTENT_ITEM_TYPE;
+               return Braindump.Notes.CONTENT_ITEM_TYPE;
 
            // If the URI pattern doesn't match any permitted patterns, throws an exception.
            default:
@@ -519,25 +519,25 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
         Long now = Long.valueOf(System.currentTimeMillis());
 
         // If the values map doesn't contain the creation date, sets the value to the current time.
-        if (values.containsKey(NotePad.Notes.COLUMN_NAME_CREATE_DATE) == false) {
-            values.put(NotePad.Notes.COLUMN_NAME_CREATE_DATE, now);
+        if (values.containsKey(Braindump.Notes.COLUMN_NAME_CREATE_DATE) == false) {
+            values.put(Braindump.Notes.COLUMN_NAME_CREATE_DATE, now);
         }
 
         // If the values map doesn't contain the modification date, sets the value to the current
         // time.
-        if (values.containsKey(NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE) == false) {
-            values.put(NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE, now);
+        if (values.containsKey(Braindump.Notes.COLUMN_NAME_MODIFICATION_DATE) == false) {
+            values.put(Braindump.Notes.COLUMN_NAME_MODIFICATION_DATE, now);
         }
 
         // If the values map doesn't contain a title, sets the value to the default title.
-        if (values.containsKey(NotePad.Notes.COLUMN_NAME_TITLE) == false) {
+        if (values.containsKey(Braindump.Notes.COLUMN_NAME_TITLE) == false) {
             Resources r = Resources.getSystem();
-            values.put(NotePad.Notes.COLUMN_NAME_TITLE, r.getString(android.R.string.untitled));
+            values.put(Braindump.Notes.COLUMN_NAME_TITLE, r.getString(android.R.string.untitled));
         }
 
         // If the values map doesn't contain note text, sets the value to an empty string.
-        if (values.containsKey(NotePad.Notes.COLUMN_NAME_NOTE) == false) {
-            values.put(NotePad.Notes.COLUMN_NAME_NOTE, "");
+        if (values.containsKey(Braindump.Notes.COLUMN_NAME_NOTE) == false) {
+            values.put(Braindump.Notes.COLUMN_NAME_NOTE, "");
         }
 
         // Opens the database object in "write" mode.
@@ -545,8 +545,8 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
 
         // Performs the insert and returns the ID of the new note.
         long rowId = db.insert(
-            NotePad.Notes.TABLE_NAME,        // The table to insert into.
-            NotePad.Notes.COLUMN_NAME_NOTE,  // A hack, SQLite sets this column value to null
+            Braindump.Notes.TABLE_NAME,        // The table to insert into.
+            Braindump.Notes.COLUMN_NAME_NOTE,  // A hack, SQLite sets this column value to null
                                              // if values is empty.
             values                           // A map of column names, and the values to insert
                                              // into the columns.
@@ -555,7 +555,7 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
         // If the insert succeeded, the row ID exists.
         if (rowId > 0) {
             // Creates a URI with the note ID pattern and the new row ID appended to it.
-            Uri noteUri = ContentUris.withAppendedId(NotePad.Notes.CONTENT_ID_URI_BASE, rowId);
+            Uri noteUri = ContentUris.withAppendedId(Braindump.Notes.CONTENT_ID_URI_BASE, rowId);
 
             // Notifies observers registered against this provider that the data changed.
             getContext().getContentResolver().notifyChange(noteUri, null);
@@ -595,7 +595,7 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
             // based on the incoming "where" columns and arguments.
             case NOTES:
                 count = db.delete(
-                    NotePad.Notes.TABLE_NAME,  // The database table name
+                    Braindump.Notes.TABLE_NAME,  // The database table name
                     where,                     // The incoming where clause column names
                     whereArgs                  // The incoming where clause values
                 );
@@ -610,10 +610,10 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
                  * desired note ID.
                  */
                 finalWhere =
-                        NotePad.Notes._ID +                              // The ID column name
+                        Braindump.Notes._ID +                              // The ID column name
                         " = " +                                          // test for equality
                         uri.getPathSegments().                           // the incoming note ID
-                            get(NotePad.Notes.NOTE_ID_PATH_POSITION)
+                            get(Braindump.Notes.NOTE_ID_PATH_POSITION)
                 ;
 
                 // If there were additional selection criteria, append them to the final
@@ -624,7 +624,7 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
 
                 // Performs the delete.
                 count = db.delete(
-                    NotePad.Notes.TABLE_NAME,  // The database table name.
+                    Braindump.Notes.TABLE_NAME,  // The database table name.
                     finalWhere,                // The final WHERE clause
                     whereArgs                  // The incoming where clause values.
                 );
@@ -682,7 +682,7 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
 
                 // Does the update and returns the number of rows updated.
                 count = db.update(
-                    NotePad.Notes.TABLE_NAME, // The database table name.
+                    Braindump.Notes.TABLE_NAME, // The database table name.
                     values,                   // A map of column names and new values to use.
                     where,                    // The where clause column names.
                     whereArgs                 // The where clause column values to select on.
@@ -693,17 +693,17 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
             // data, but modifies the where clause to restrict it to the particular note ID.
             case NOTE_ID:
                 // From the incoming URI, get the note ID
-                String noteId = uri.getPathSegments().get(NotePad.Notes.NOTE_ID_PATH_POSITION);
+                String noteId = uri.getPathSegments().get(Braindump.Notes.NOTE_ID_PATH_POSITION);
 
                 /*
                  * Starts creating the final WHERE clause by restricting it to the incoming
                  * note ID.
                  */
                 finalWhere =
-                        NotePad.Notes._ID +                              // The ID column name
+                        Braindump.Notes._ID +                              // The ID column name
                         " = " +                                          // test for equality
                         uri.getPathSegments().                           // the incoming note ID
-                            get(NotePad.Notes.NOTE_ID_PATH_POSITION)
+                            get(Braindump.Notes.NOTE_ID_PATH_POSITION)
                 ;
 
                 // If there were additional selection criteria, append them to the final WHERE
@@ -715,7 +715,7 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
 
                 // Does the update and returns the number of rows updated.
                 count = db.update(
-                    NotePad.Notes.TABLE_NAME, // The database table name.
+                    Braindump.Notes.TABLE_NAME, // The database table name.
                     values,                   // A map of column names and new values to use.
                     finalWhere,               // The final WHERE clause to use
                                               // placeholders for whereArgs
@@ -739,7 +739,7 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
     }
 
     /**
-     * A test package can call this to get a handle to the database underlying NotePadProvider,
+     * A test package can call this to get a handle to the database underlying BraindumpProvider,
      * so it can insert test data into the database. The test case class is responsible for
      * instantiating the provider in a test context; {@link android.test.ProviderTestCase2} does
      * this during the call to setUp()

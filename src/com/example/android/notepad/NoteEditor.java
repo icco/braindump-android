@@ -58,9 +58,9 @@ public class NoteEditor extends Activity {
      */
     private static final String[] PROJECTION =
         new String[] {
-            NotePad.Notes._ID,
-            NotePad.Notes.COLUMN_NAME_TITLE,
-            NotePad.Notes.COLUMN_NAME_NOTE
+            Braindump.Notes._ID,
+            Braindump.Notes.COLUMN_NAME_TITLE,
+            Braindump.Notes.COLUMN_NAME_NOTE
     };
 
     // A label for the saved state of the activity
@@ -267,7 +267,7 @@ public class NoteEditor extends Activity {
             // Modifies the window title for the Activity according to the current Activity state.
             if (mState == STATE_EDIT) {
                 // Set the title of the Activity to include the note title
-                int colTitleIndex = mCursor.getColumnIndex(NotePad.Notes.COLUMN_NAME_TITLE);
+                int colTitleIndex = mCursor.getColumnIndex(Braindump.Notes.COLUMN_NAME_TITLE);
                 String title = mCursor.getString(colTitleIndex);
                 Resources res = getResources();
                 String text = String.format(res.getString(R.string.title_edit), title);
@@ -286,7 +286,7 @@ public class NoteEditor extends Activity {
 
             // Gets the note text from the Cursor and puts it in the TextView, but doesn't change
             // the text cursor's position.
-            int colNoteIndex = mCursor.getColumnIndex(NotePad.Notes.COLUMN_NAME_NOTE);
+            int colNoteIndex = mCursor.getColumnIndex(Braindump.Notes.COLUMN_NAME_NOTE);
             String note = mCursor.getString(colNoteIndex);
             mText.setTextKeepState(note);
 
@@ -409,7 +409,7 @@ public class NoteEditor extends Activity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Check if note has changed and enable/disable the revert option
-        int colNoteIndex = mCursor.getColumnIndex(NotePad.Notes.COLUMN_NAME_NOTE);
+        int colNoteIndex = mCursor.getColumnIndex(Braindump.Notes.COLUMN_NAME_NOTE);
         String savedNote = mCursor.getString(colNoteIndex);
         String currentNote = mText.getText().toString();
         if (savedNote.equals(currentNote)) {
@@ -478,7 +478,7 @@ public class NoteEditor extends Activity {
             // Tests to see that the item actually is an URI, and that the URI
             // is a content URI pointing to a provider whose MIME type is the same
             // as the MIME type supported by the Note pad provider.
-            if (uri != null && NotePad.Notes.CONTENT_ITEM_TYPE.equals(cr.getType(uri))) {
+            if (uri != null && Braindump.Notes.CONTENT_ITEM_TYPE.equals(cr.getType(uri))) {
 
                 // The clipboard holds a reference to data with a note MIME type. This copies it.
                 Cursor orig = cr.query(
@@ -493,8 +493,8 @@ public class NoteEditor extends Activity {
                 // (moveToFirst() returns true), then this gets the note data from it.
                 if (orig != null) {
                     if (orig.moveToFirst()) {
-                        int colNoteIndex = mCursor.getColumnIndex(NotePad.Notes.COLUMN_NAME_NOTE);
-                        int colTitleIndex = mCursor.getColumnIndex(NotePad.Notes.COLUMN_NAME_TITLE);
+                        int colNoteIndex = mCursor.getColumnIndex(Braindump.Notes.COLUMN_NAME_NOTE);
+                        int colTitleIndex = mCursor.getColumnIndex(Braindump.Notes.COLUMN_NAME_TITLE);
                         text = orig.getString(colNoteIndex);
                         title = orig.getString(colTitleIndex);
                     }
@@ -525,7 +525,7 @@ public class NoteEditor extends Activity {
 
         // Sets up a map to contain values to be updated in the provider.
         ContentValues values = new ContentValues();
-        values.put(NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE, System.currentTimeMillis());
+        values.put(Braindump.Notes.COLUMN_NAME_MODIFICATION_DATE, System.currentTimeMillis());
 
         // If the action is to insert a new note, this creates an initial title for it.
         if (mState == STATE_INSERT) {
@@ -550,14 +550,14 @@ public class NoteEditor extends Activity {
                 }
             }
             // In the values map, sets the value of the title
-            values.put(NotePad.Notes.COLUMN_NAME_TITLE, title);
+            values.put(Braindump.Notes.COLUMN_NAME_TITLE, title);
         } else if (title != null) {
             // In the values map, sets the value of the title
-            values.put(NotePad.Notes.COLUMN_NAME_TITLE, title);
+            values.put(Braindump.Notes.COLUMN_NAME_TITLE, title);
         }
 
         // This puts the desired notes text into the map.
-        values.put(NotePad.Notes.COLUMN_NAME_NOTE, text);
+        values.put(Braindump.Notes.COLUMN_NAME_NOTE, text);
 
         /*
          * Updates the provider with the new values in the map. The ListView is updated
@@ -591,7 +591,7 @@ public class NoteEditor extends Activity {
                 mCursor.close();
                 mCursor = null;
                 ContentValues values = new ContentValues();
-                values.put(NotePad.Notes.COLUMN_NAME_NOTE, mOriginalContent);
+                values.put(Braindump.Notes.COLUMN_NAME_NOTE, mOriginalContent);
                 getContentResolver().update(mUri, values, null, null);
             } else if (mState == STATE_INSERT) {
                 // We inserted an empty note, make sure to delete it

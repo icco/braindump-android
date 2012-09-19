@@ -42,8 +42,8 @@ public class TitleEditor extends Activity {
 
     // Creates a projection that returns the note ID and the note contents.
     private static final String[] PROJECTION = new String[] {
-            NotePad.Notes._ID, // 0
-            NotePad.Notes.COLUMN_NAME_TITLE, // 1
+            Braindump.Notes._ID, // 0
+            Braindump.Notes.COLUMN_NAME_TITLE, // 1
     };
 
     // The position of the title column in a Cursor returned by the provider.
@@ -141,7 +141,7 @@ public class TitleEditor extends Activity {
             ContentValues values = new ContentValues();
 
             // In the values map, sets the title to the current contents of the edit box.
-            values.put(NotePad.Notes.COLUMN_NAME_TITLE, mText.getText().toString());
+            values.put(Braindump.Notes.COLUMN_NAME_TITLE, mText.getText().toString());
 
             /*
              * Updates the provider with the note's new title.

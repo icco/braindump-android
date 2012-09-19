@@ -25,11 +25,11 @@ import android.provider.BaseColumns;
  * is a public, non-extendable (final) class that contains constants defining column names and
  * URIs. A well-written client depends only on the constants in the contract.
  */
-public final class NotePad {
-    public static final String AUTHORITY = "com.google.provider.NotePad";
+public final class Braindump {
+    public static final String AUTHORITY = "com.google.provider.Braindump";
 
     // This class cannot be instantiated
-    private NotePad() {
+    private Braindump() {
     }
 
     /**
